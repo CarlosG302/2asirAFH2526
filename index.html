@@ -6,30 +6,30 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e9ecef;
+            background-color: #121212;
             margin: 0;
             padding: 0;
-            color: #333;
+            color: #ddd;
         }
         header {
-            background-color: #007bff;
-            color: white;
+            background-color: #1e1e1e;
+            color: #a8d0e6;
             padding: 20px;
             text-align: center;
             font-size: 1.8em;
             font-weight: bold;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.7);
         }
         main {
             max-width: 700px;
             margin: 30px auto;
-            background: white;
+            background: #1e1e1e;
             padding: 25px 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
         }
         h2 {
-            color: #007bff;
+            color: #a8d0e6;
             margin-bottom: 20px;
         }
         ul.activities {
@@ -37,22 +37,34 @@
             padding-left: 0;
         }
         ul.activities li {
-            background-color: #f8f9fa;
-            border-left: 5px solid #007bff;
+            background-color: #292929;
+            border-left: 5px solid #3a9ad9;
             margin-bottom: 15px;
             padding: 15px 20px;
-            font-weight: 600;
             border-radius: 4px;
-            transition: background-color 0.3s ease;
         }
-        ul.activities li:hover {
-            background-color: #dbe9ff;
+        .activity-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #cee4fb;
+        }
+        .repo-link {
+            font-size: 0.9em;
+            margin-top: 6px;
+        }
+        .repo-link a {
+            color: #5eb8ff;
+            text-decoration: none;
+        }
+        .repo-link a:hover {
+            text-decoration: underline;
         }
         footer {
             text-align: center;
             padding: 15px;
             font-size: 0.9em;
-            color: #555;
+            color: #777;
             margin-top: 40px;
         }
     </style>
@@ -64,8 +76,16 @@
     <main>
         <h2>Actividades</h2>
         <ul class="activities">
-            <li>Crear una página estática</li>
-            <!-- Aquí puedes agregar más actividades -->
+            <li>
+                <div class="activity-title">Crear una página estática</div>
+                <div class="repo-link">
+                    Repositorio: 
+                    <a href="https://github.com/tuusuario/pagina-estatica" target="_blank" rel="noopener noreferrer">
+                        https://github.com/tuusuario/pagina-estatica
+                    </a>
+                </div>
+            </li>
+            <!-- Agrega más actividades aquí con el mismo formato -->
         </ul>
     </main>
     <footer>
