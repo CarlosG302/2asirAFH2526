@@ -1,1 +1,115 @@
-pagina
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>BMW - Marca de Innovación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            color: #222;
+        }
+        header {
+            background: #12151c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #00285b;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 12px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #b2d235;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        h1, h2 {
+            color: #00285b;
+        }
+        .models {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .model-card {
+            background: #f2f7f8;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px #ccc;
+            padding: 20px;
+            width: 220px;
+            text-align: center;
+            font-weight: bold;
+            color: #00285b;
+        }
+        .model-description {
+            margin-top: 10px;
+            font-weight: normal;
+            color: #444;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #12151c;
+            color: #fff;
+            margin-top: 36px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BMW</h1>
+        <p>Innovación, rendimiento y diseño alemán.</p>
+    </header>
+    <nav>
+        <a href="#historia">Historia</a>
+        <a href="#modelos">Modelos Destacados</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="container">
+        <section id="historia">
+            <h2>Historia de BMW</h2>
+            <p>BMW (Bayerische Motoren Werke AG) es una empresa alemana fundada en 1916, conocida mundialmente por fabricar automóviles y motocicletas premium. Desde sus inicios, BMW ha sido sinónimo de innovación tecnológica y excelencia en ingeniería, posicionándose como una de las marcas líderes en el sector automovilístico de lujo.</p>
+        </section>
+        <section id="modelos">
+            <h2>Modelos Destacados</h2>
+            <div class="models">
+                <div class="model-card">
+                    BMW Serie 3
+                    <div class="model-description">Sedán compacto deportivo, equilibrio entre rendimiento y confort.</div>
+                </div>
+                <div class="model-card">
+                    BMW i4
+                    <div class="model-description">Berlina 100% eléctrica de alto rendimiento y tecnología avanzada.</div>
+                </div>
+                <div class="model-card">
+                    BMW X5
+                    <div class="model-description">SUV de lujo, potente y versátil para cualquier terreno.</div>
+                </div>
+            </div>
+        </section>
+        <section id="contacto">
+            <h2>Contacto</h2>
+            <p>¿Quieres saber más sobre BMW? Visítanos en nuestra <a href="https://www.bmw.com" target="_blank">página oficial</a> o contáctanos a través de nuestras redes sociales.</p>
+        </section>
+    </div>
+    <footer>
+        &copy; 2025 Página informativa creada sobre BMW.
+    </footer>
+</body>
+</html>
