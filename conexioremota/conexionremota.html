@@ -25,16 +25,55 @@
     </header>
     <main>
         <section>
-            <h2>Punto 1</h2>
+            <h2>Punto 1 SSH</h2>
+            <h1>Windows a Ubuntu</h1>
+            Lo primero es que las maquinas tengan conexion entre sí configurando las IPs <br/>
+            Luego es instalar el servicio ssh y que este activo
             <img src="cr1.png">
+            Después se instala PuTTy en el Windows<br/>
+            Una vez instalado saldrá esta ventana y habra que poner la IP del servidor y aceptar
+            <img src="cr2.png">
+            Una vez hecho esto pedirá el usuario y la contraseña desde la terminal, una vez introduzcas ambos datos entrarás en la terminal del ubuntu host.
+            <img src="cr3.png">
+            <h2>Ubuntu a Windows</h2>
+            Ahora desde un Ubuntu a otro ubuntu, primero se instala el ssh cliente en el otro ubuntu, una vez hecho esto es tan fácil como poner lo siguiente:
+            ssh "nombredeusuario"@"ip"
+            <img src="cr4.png">
+            
         </section>
 
         <section>
-            <h2>Punto 2</h2>
+            <h1>Punto 2 RDP</h1>
+            <h2>Windows a Windows</h2>
+            Primero habrá que permitir las conexiones remotas desde los Windows que utilicemos que son los que funcionan con el protocolo RDP<br/>
+            <img src="cr5.png">
+            Luego hacemos Windows + R y ponemos mstsc y saldrá esta ventana con la que ponemos la IP y las credenciales del usuario y ya nos podríamos conectar.
+            <img src="cr6.png">
+            <img src="cr7.png">
+            <h2>Ubuntu a Windows</h2>
+            Primero tenemos que instalar Remmina en el Ubuntu que es la aplicación que permite la conexión remota por RDP desde Ubuntu porque de normal Linux utliza SSH, una vez instalado a la que lo abramos saldrá esta ventana.
+            <img src="cr-8.png">
+            Aquí ponemos todas las credenciales y la IP del equipo al que nos queremos conectar y podremos controlar el Windows desde el Ubuntu, si hemos puesto todo bien saldra algo así.
+            <img src="cr8.png">
+            
+            
         </section>
 
         <section>
-            <h2>Punto 3</h2>
+            <h1>Punto 3 TeamViewer</h1>
+            Obviamente tenemos que instalar TeamViewer en todas las máquina en las que queramos operar, una vez hecho esto saldrá por cada equipo una codigo de acceso remoto y su contraseña, cuando intentemos hacer la conexión remota pedira el codigo y la contraseña del equipo al que nos queramos conectar y se nos conectará 
+            <h2>Ubuntu a Windows</h2>
+            <img src="cr9.png">
+            <h2>Windows a Ubuntu</h2>
+            <img src="cr10.png">
+            <h2>Ubuntu a Ubuntu</h2>
+            <img src="cr11.png">
+            <h2>Windows a Windows</h2>
+            <img src="cr12.png">
+            <h2>Móvil a Windows</h2>
+            <img src="cr14.png">
+            <h2>Móvil a Linux</h2>
+            <img src="cr13.png">
         </section>
     </main>
 
