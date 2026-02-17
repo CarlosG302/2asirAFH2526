@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Fine-Tuning: Gemma-2-2B en RTX 5070 Ti</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #00e676; /* Verde Unsloth */
+            --error-color: #ff5252;
+            --warning-color: #ffb74d;
+            --code-bg: #1e1e1e;
+            --sidebar-width: 280px;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            line-height: 1.6;
+        }
+
+        /* Sidebar Navegación */
+        nav {
+            width: var(--sidebar-width);
+            background-color: #1a1a1a;
+            height: 100vh;
+            position: fixed;
+            padding: 20px;
+            box-sizing: border-box;
+            border-right: 1px solid #333;
+            overflow-y: auto;
+        }
+
+        nav h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav li {
+            margin-bottom: 15px;
+        }
+
+        nav a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        /* Contenido Principal - Ajustado para ocupar más espacio */
+        main {
+            margin-left: var(--sidebar-width);
+            padding: 40px 60px;
+            max-width: 1400px; /* Aumentado drásticamente para quitar el espacio en blanco */
+            flex-grow: 1; /* Permite que el contenedor crezca y ocupe el espacio disponible */
+            width: calc(100% - 280px);
+            box-sizing: border-box;
+        }
+
+        h1 { font-size: 2.5rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+        h2 { margin-top: 40px; color: var(--accent-color); }
+        h3 { color: #fff; margin-top: 30px; }
+
+        /* Cajas de Código */
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #333;
+            font-size: 1.05rem;
+        }
+        code { font-family: 'Consolas', 'Monaco', monospace; color: #a5d6a7; }
+        .cmd { color: #fff; }
+
+        /* Cajas de Error/Info */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+        .alert-error {
+            background-color: rgba(255, 82, 82, 0.1);
+            border-color: var(--error-color);
+        }
+        .alert-warning {
+            background-color: rgba(255, 183, 77, 0.1);
+            border-color: var(--warning-color);
+        }
+        
+        /* Estilos de las Imágenes */
+        .img-container {
+            margin: 40px 0;
+            text-align: center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5); /* Sombra elegante para las capturas */
+            display: inline-block;
+        }
+
+        .caption {
+            display: block;
+            margin-top: 15px;
+            font-style: italic;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Manual Fine-Tuning</h2>
+        <ul>
+            <li><a href="#intro">1. Introducción y Hardware</a></li>
+            <li><a href="#setup">2. Preparación del Entorno</a></li>
+            <li><a href="#errors">3. Errores Críticos (GPU/CPU)</a></li>
+            <li><a href="#dataset">4. Creación del Dataset</a></li>
+            <li><a href="#script">5. Configuración del Modelo</a></li>
+            <li><a href="#training">6. Ejecución y Resultados</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="intro">
+            <h1>Fine-Tuning Local con RTX 5070 Ti</h1>
+            Carlos Giganto Lobato<p>Este manual documenta el proceso paso a paso para realizar un ajuste fino (Fine-Tuning) del modelo <strong>Gemma-2-2B</strong> utilizando la librería <strong>Unsloth</strong> en un entorno nativo (o WSL2).</p>
+            
+            <div class="alert alert-warning">
+                <strong>Nota sobre Hardware:</strong> Este proceso ha sido depurado específicamente para la arquitectura <strong>NVIDIA Blackwell (RTX 5070 Ti)</strong>, la cual requiere lidiar con versiones "Nightly" (Candidatas) de PyTorch y CUDA 12.8 para evitar que Python no detecte la gráfica.
+            </div>
+        </section>
+
+        <section id="setup">
+            <h2>2. Preparación del Entorno</h2>
+            <p>Es fundamental trabajar en un entorno limpio para evitar conflictos de dependencias.</p>
+
+            <h3>Paso 2.1: Creación de Carpeta y Entorno Virtual</h3>
+            <p>Creamos el directorio de trabajo y aislamos las librerías con <code>venv</code>. Esto asegurará que nuestro sistema base no se corrompa.</p>
+            
+            <pre><code class="cmd">mkdir mi-finetuning
+cd mi-finetuning
+python -m venv venv
+source venv/bin/activate</code></pre>
+
+            <div class="img-container">
+                <img src="capturas/1.png" alt="Creación y activación del entorno virtual">
+               <span class="caption">Figura 1: Creación de la carpeta, generación del entorno (venv) y activación del mismo, visible en el prompt.</span>
+            </div>
+
+            <h3>Paso 2.2: Actualización e Instalación Base</h3>
+            <p>Actualizamos <code>pip</code> para evitar errores de compatibilidad con paquetes modernos.</p>
+            
+            <pre><code class="cmd">pip install --upgrade pip</code></pre>
+
+            <div class="img-container">
+                <img src="capturas/2.png" alt="Actualización de Pip descargando archivos">
+                <span class="caption">Figura 2: Proceso de descarga e instalación de la última versión de pip en el entorno.</span>
+            </div>
+
+        </section>
+
+        <section id="errors">
+            <h2>3. Errores Críticos Superados (El problema de la GPU)</h2>
+            <p>Durante la instalación de PyTorch y Unsloth, nos encontramos con varios bloqueos severos. Documentamos aquí las soluciones definitivas que aplicamos en el terminal.</p>
+
+            <div class="alert alert-error">
+                <h3>Error 1: "Unsloth cannot find any torch accelerator"</h3>
+                <p><strong>Causa:</strong> Al instalar paquetes de forma estándar, Python instaló la versión de procesador (<code>2.10.0+cpu</code>) en lugar de la versión de Tarjeta Gráfica. Unsloth y otras dependencias sobrescribieron silenciosamente la instalación de CUDA.</p>
+                <p><strong>Solución:</strong> Desinstalar todo rastro de PyTorch y forzar la instalación de la versión <strong>Nightly (CUDA 12.8)</strong> de forma aislada.</p>
+                <pre><code class="cmd">pip uninstall -y torch torchvision torchaudio xformers
+pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu128</code></pre>
+            </div>
+
+            <div class="alert alert-error">
+                <h3>Error 2: "ReadTimeoutError / Operation timed out"</h3>
+                <p><strong>Causa:</strong> Los paquetes de PyTorch con CUDA pesan alrededor de 2.8 GB. Las fluctuaciones en la red causaron que <code>pip</code> cancelara la descarga por falta de respuesta del servidor.</p>
+                <p><strong>Solución:</strong> Añadimos el parámetro <code>--timeout 10000</code> y <code>--no-cache-dir</code> para dar tiempo de espera ilimitado al instalador.</p>
+            </div>
+            
+        </section>
+
+        <section id="dataset">
+            <h2>4. Creación del Dataset (datos_asistente_formal.jsonl)</h2>
+            <p>Para enseñar a la IA a comportarse de una manera específica, creamos un archivo JSONL (formato Alpaca) que contiene instrucciones y sus respuestas ideales.</p>
+
+            <pre><code class="cmd">nano datos_asistente_formal.jsonl</code></pre>
+
+            <div class="img-container">
+                <img src="capturas/3.png" alt="Editor nano con el archivo datos_asistente_formal.jsonl">
+                <span class="caption">Figura 3: Editor de texto mostrando los pares de instrucción/salida sobre Pedro Sánchez para entrenar el comportamiento formaL.</span>
+            </div>
+        </section>
+
+        <section id="script">
+            <h2>5. Archivo de Configuración (config_formal.yml)</h2>
+            <p>En lugar de modificar los hiperparámetros directamente en el código Python, utilizamos un archivo de configuración <code>YAML</code> para estructurar las reglas del Fine-Tuning, los adaptadores LoRA y la cuantización[cite: 47, 50, 53].</p>
+            
+            <pre><code class="yaml">base_model: mistralai/Mistral-7B-v0.1
+load_in_4bit: true
+adapter: lora
+datasets:
+  - path: datos_asistente_formal.jsonl
+    type: alpaca
+lora_r: 16
+lora_alpha: 32
+lora_target_modules:
+  - q_proj
+  - v_proj
+num_epochs: 3
+micro_batch_size: 1
+gradient_accumulation_steps: 2
+learning_rate: 0.0002</code></pre>
+
+            <div class="img-container">
+                <img src="capturas/4.png" alt="Contenido del archivo config_formal.yml">
+                [cite_start]<span class="caption">Figura 4: Archivo de configuración estableciendo hiperparámetros como r: 16, alpha: 32, epochs: 3 y optimizador adamw[cite: 60, 61, 66, 96, 97].</span>
+            </div>
+        </section>
+
+        <section id="training">
+            <h2>6. Ejecución y Resultados</h2>
+            <p>Una vez que el entorno reconoció la RTX 5070 Ti, lanzamos el proceso de entrenamiento[cite: 100]. Al terminar, interactuamos con el modelo resultante para verificar si había asimilado el nuevo conocimiento y estilo de respuesta.</p>
+
+            <div class="img-container">
+                <img src="capturas/5.png" alt="Chat preguntando sobre los alumnos de ASIR">
+                <span class="caption">Figura 5: Interfaz del chat validando la inferencia del modelo tras el fine-tuning, respondiendo a la consulta sobre los alumnos de ASIR[cite: 101, 102].</span>
+            </div>
+            
+            <div class="alert alert-warning">
+                <strong>Sobre el Overfitting:</strong> Se debe tener cuidado con la relación entre la cantidad de datos y el número de epochs/steps[cite: 66, 93]. Un entrenamiento prolongado con un dataset muy pequeño provocará que el modelo memorice sin comprender el contexto global.
+            </div>
+        </section>
+    </main>
+</body>
+</html>
