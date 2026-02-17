@@ -1,1 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Destilacion</title>
+    <style>
+        :root {
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --accent: #2563eb;
+            --accent-soft: #e0edff;
+            --border-soft: #d1d5db;
+            --text-main: #111827;
+            --text-soft: #4b5563;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #e5edff 0, #f3f4f6 45%, #e5e7eb 100%);
+            color: var(--text-main);
+        }
+
+        header {
+            padding: 2.2rem 1.5rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            color: #f9fafb;
+            box-shadow: 0 4px 18px rgba(15,23,42,0.25);
+        }
+
+        header h1 {
+            margin: 0.2rem 0 0.3rem;
+            font-size: 2.1rem;
+            letter-spacing: 0.03em;
+        }
+
+        header p {
+            margin: 0;
+            color: #e5e7eb;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.78rem;
+            padding: 0.18rem 0.7rem;
+            border-radius: 999px;
+            background-color: rgba(15,23,42,0.2);
+            color: #e0f2fe;
+            border: 1px solid rgba(191,219,254,0.8);
+        }
+
+        main {
+            max-width: 960px;
+            margin: 1.8rem auto 3rem;
+            padding: 0 1.5rem 2rem;
+        }
+
+        section.card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 1.4rem 1.6rem;
+            border: 1px solid var(--border-soft);
+            box-shadow:
+                0 10px 28px rgba(148,163,184,0.25),
+                0 0 0 1px rgba(255,255,255,0.8);
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0.7rem;
+            font-size: 1.35rem;
+            color: #111827;
+        }
+
+        h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.35rem;
+            font-size: 1.02rem;
+            color: #111827;
+        }
+
+        p {
+            margin: 0.25rem 0 0.6rem;
+            color: var(--text-soft);
+            line-height: 1.6;
+        }
+
+        pre {
+            margin: 0.5rem 0 0.8rem;
+            padding: 0.75rem 0.9rem;
+            background: #0f172a;
+            border-radius: 10px;
+            overflow-x: auto;
+            border: 1px solid #1d4ed8;
+            font-size: 0.86rem;
+            color: #e5e7eb;
+        }
+
+        code {
+            font-family: Consolas, "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+        }
+
+        .nota {
+            margin: 0.5rem 0 0.8rem;
+            padding: 0.55rem 0.75rem;
+            border-radius: 10px;
+            background: #fef9c3;
+            border: 1px solid #facc15;
+            font-size: 0.9rem;
+            color: #854d0e;
+        }
+
+        .nota strong { color: #92400e; }
+
+        .image-slot {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 0.9rem;
+            border: 1px dashed #9ca3af;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .image-slot img {
+            margin-top: 0.6rem;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(15,23,42,0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 1.5rem 2rem;
+            font-size: 0.82rem;
+            color: #6b7280;
+        }
+
+        ul {
+            margin: 0.3rem 0 0.7rem;
+            padding-left: 1.3rem;
+            color: var(--text-soft);
+        }
+
+        li { margin-bottom: 0.2rem; }
+    </style>
+</head>
+<body>
+<header>
+    <span class="badge">Carlos Giganto Lobato</span>
+    <h1>Manual de Destilación de un LLM en CPU</h1>
+</header>
+
+<main>
+    <!-- 1. Introducción general -->
+    <section class="card" id="introduccion">
+        <h2>1. ¿Qué es la destilación?</h2>
+        <p>
+            La <strong>destilación de conocimiento</strong> es una técnica para entrenar un modelo pequeño
+            (estudiante) a partir de un modelo grande (profesor). El estudiante aprende a imitar las salidas
+            del profesor, conservando gran parte de su rendimiento pero con menor peso y coste de ejecución. [file:94]
+        </p>
+        <p>
+            En esta práctica se ha trabajado con modelos de lenguaje en Windows 11, cargando un modelo grande
+            y destilándolo a un modelo pequeño entrenado en CPU, debido a problemas de compatibilidad con la GPU. [file:94]
+        </p>
+    </section>
+
+    <!-- 2. Captura real del entrenamiento -->
+    <section class="card" id="captura">
+        <h2>2. Captura del entrenamiento de la destilación</h2>
+        <p>
+            La siguiente imagen muestra una captura real del entrenamiento del modelo estudiante en CPU:
+            a la izquierda la consola ejecutando el script y a la derecha el uso de CPU en el Administrador
+            de tareas de Windows.
+        </p>
+        <div class="image-slot">
+            <!-- Guarda esta imagen en la misma carpeta que el HTML con este nombre -->
+            <img src="capturas/1.png"
+                 alt="Captura del entrenamiento de destilación en CPU (TinyLlama / estudiante)" />
+        </div>
+    </section>
+
+    <!-- 3. Preparación del entorno y errores encontrados -->
+    <section class="card" id="errores-entorno">
+        <h2>3. Preparación del entorno y errores típicos</h2>
+
+        <h3>3.1 Creación del entorno virtual</h3>
+        <pre><code># Crear y activar el entorno virtual
+python -m venv venv
+venv\Scripts\activate
+
+# Actualizar pip
+pip install --upgrade pip</code></pre>
+
+        <h3>3.2 Instalar PyTorch en CPU (evitar errores de CUDA)</h3>
+        <p>
+            Al inicio aparecían mensajes como
+            <code>CUDA error: no kernel image is available for execution on the device</code>
+            y avisos de que la GPU RTX 5060 Ti no era compatible con la versión de PyTorch instalada. 
+            Se decidió instalar PyTorch sólo para CPU. [web:0]
+        </p>
+        <pre><code># Instalar PyTorch sólo CPU
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu</code></pre>
+
+        <div class="nota">
+            <strong>Error típico 1:</strong> advertencias del tipo
+            <code>NVIDIA GeForce RTX 5060 Ti ... is not compatible</code>.
+            <br>Solución: usar la versión CPU de PyTorch y forzar el entrenamiento en CPU.
+        </div>
+
+        <h3>3.3 PyTorch no carga sus DLL</h3>
+        <p>
+            En un momento la importación de <code>torch</code> fallaba por problemas al cargar DLLs
+            dentro del entorno virtual. Se arregló desinstalando e instalando de nuevo PyTorch CPU. [web:0]
+        </p>
+        <pre><code># Eliminar instalación dañada
+pip uninstall torch torchvision torchaudio -y
+
+# Volver a instalar versión CPU estable
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu</code></pre>
+    </section>
+
+    <!-- 4. Carga de modelos y errores de TRL / tokenizador -->
+    <section class="card" id="modelos">
+        <h2>4. TinyLlama, TRL y errores con SFTTrainer</h2>
+
+        <h3>4.1 Cargar TinyLlama y su tokenizador en CPU</h3>
+        <pre><code>from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch, os
+
+# Ocultar la GPU
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
+
+model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    torch_dtype=torch.float32,
+    device_map=None,
+).to("cpu")
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token</code></pre>
+
+        <div class="nota">
+            <strong>Error típico 2:</strong> aunque el modelo se cargaba en CPU, el entrenador seguía
+            intentando usar la GPU. Se corrigió ocultando la GPU con
+            <code>CUDA_VISIBLE_DEVICES=""</code>, desactivando <code>no_cuda</code> y moviendo 
+            explícitamente el modelo a <code>cpu</code>.
+        </div>
+
+        <h3>4.2 Incompatibilidades con TRL y parámetros de SFTTrainer</h3>
+        <p>
+            Al usar <code>SFTTrainer</code> de la librería <code>trl</code> aparecieron varios errores:
+        </p>
+        <ul>
+            <li><code>TypeError: Trainer.__init__() got an unexpected keyword argument 'tokenizer'</code></li>
+            <li><code>TypeError: SFTTrainer.__init__() got an unexpected keyword argument 'processing_class'</code></li>
+            <li>Advertencias sobre argumentos obsoletos: <code>max_seq_length</code>,
+                <code>dataset_text_field</code>, etc.</li>
+        </ul>
+        <p>
+            Estos errores se debían a cambios de API entre versiones de <code>trl</code> y
+            <code>transformers</code>. La solución fue fijar versiones compatibles
+            (<code>transformers==4.41.2</code>, <code>trl==0.11.3</code>, <code>peft==0.11.1</code>)
+            y usar la firma que admite <code>tokenizer=...</code> dentro de <code>SFTTrainer</code>. [file:94]
+        </p>
+        <pre><code>pip install "transformers==4.41.2" "trl==0.11.3" "peft==0.11.1" datasets accelerate</code></pre>
+
+        <pre><code>from trl import SFTTrainer
+from transformers import TrainingArguments
+from datasets import load_dataset
+
+dataset = load_dataset("imdb", split="train[:100]")
+
+def format_text(example):
+    text = example["text"]
+    example["text"] = (
+        "&lt;|system|&gt;Eres un asistente útil.&lt;|end|&gt;"
+        f"&lt;|user|&gt;{text}&lt;|end|&gt;"
+        "&lt;|assistant|&gt;Respuesta.&lt;|end|&gt;"
+    )
+    return example
+
+dataset = dataset.map(format_text)
+
+training_args = TrainingArguments(
+    output_dir="./output",
+    per_device_train_batch_size=1,
+    gradient_accumulation_steps=8,
+    num_train_epochs=1,
+    logging_steps=10,
+    save_steps=50,
+    save_total_limit=2,
+    no_cuda=True,   # fuerza CPU
+    report_to="none",
+)
+
+trainer = SFTTrainer(
+    model=model,
+    train_dataset=dataset,
+    args=training_args,
+    tokenizer=tokenizer,
+    max_seq_length=512,
+    dataset_text_field="text",
+)</code></pre>
+
+        <div class="nota">
+            <strong>Error típico 3:</strong> usar una versión de <code>trl</code> que esperaba
+            <code>processing_class</code> en lugar de <code>tokenizer</code>, o viceversa. 
+            Se estabilizó la práctica fijando una combinación de versiones donde la firma fuera
+            consistente y las advertencias sólo fueran de deprecación, no errores.
+        </div>
+    </section>
+
+    <!-- 5. Arranque del entrenamiento -->
+    <section class="card" id="entrenamiento">
+        <h2>5. Entrenamiento del modelo estudiante en CPU</h2>
+        <p>
+            Resueltos los errores de entorno y de versiones, el entrenamiento del modelo estudiante
+            se pudo iniciar correctamente en CPU:
+        </p>
+        <pre><code>print("--&gt; ¡INICIANDO ENTRENAMIENTO EN CPU!")
+trainer.train()
+
+trainer.save_model("./tinyllama-1.1b-finetuned")
+tokenizer.save_pretrained("./tinyllama-1.1b-finetuned")
+print("--&gt; Entrenamiento completado")</code></pre>
+    </section>
+
+    <!-- 6. Script para medir divergencia KL -->
+    <section class="card" id="kl">
+        <h2>6. Medir la divergencia KL entre profesor y estudiante</h2>
+        <p>
+            Para verificar que el modelo pequeño ha sido destilado del grande, se puede medir la
+            <strong>divergencia KL</strong> entre sus distribuciones de salida sobre un conjunto de
+            frases de prueba. Es importante que ambos modelos compartan el mismo tokenizador. [file:94]
+        </p>
+        <pre><code>import torch
+import torch.nn.functional as F
+
+def medir_kl(teacher_model, student_model, tokenizer, textos):
+    teacher_model.eval()
+    student_model.eval()
+    total_kl = 0.0
+    n = 0
+
+    for texto in textos:
+        inputs = tokenizer(
+            texto,
+            return_tensors="pt",
+            truncation=True,
+            padding="max_length",
+        )
+
+        with torch.no_grad():
+            out_teacher = teacher_model(**inputs)
+            out_student = student_model(**inputs)
+
+        p_teacher = F.softmax(out_teacher.logits, dim=-1)
+        log_p_student = F.log_softmax(out_student.logits, dim=-1)
+
+        kl = F.kl_div(
+            log_p_student,
+            p_teacher,
+            reduction="batchmean",
+        )
+
+        total_kl += kl.item()
+        n += 1
+
+    return total_kl / max(n, 1)
+
+# Ejemplo de uso
+textos_prueba = [
+    "This movie was amazing!",
+    "I hated this film, it was terrible.",
+    "The plot was okay but the acting was great.",
+]
+
+kl_media = medir_kl(teacher_model, student_model, tokenizer, textos_prueba)
+print("Divergencia KL media:", kl_media)</code></pre>
+
+        <div class="nota">
+            <strong>Error conceptual:</strong> calcular KL entre modelos con tokenizadores distintos
+            (por ejemplo, Llama vs otro vocabulario) produce resultados incoherentes. Para destilación
+            correcta, profesor y estudiante deben compartir el mismo espacio de tokens. [file:94]
+        </div>
+    </section>
+
+    <!-- 7. Resumen -->
+    <section class="card" id="conclusion">
+        <h2>7. Resumen de la práctica</h2>
+        <ul>
+            <li>Se creó un entorno virtual y se instaló PyTorch CPU para evitar errores de CUDA.</li>
+            <li>Se fijaron versiones compatibles de <code>transformers</code>, <code>trl</code> y <code>peft</code>.</li>
+            <li>Se entrenó un modelo estudiante pequeño en CPU usando <code>SFTTrainer</code>.</li>
+            <li>Se añadió un script de divergencia KL para comprobar la similitud entre profesor y estudiante.</li>
+            <li>La captura incluida documenta el entrenamiento real realizado en esta destilación.</li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    Manual HTML elaborado a partir de la práctica real de destilación de un LLM en Windows 11, incluyendo errores encontrados y sus soluciones.
+</footer>
+</body>
+</html>
 
