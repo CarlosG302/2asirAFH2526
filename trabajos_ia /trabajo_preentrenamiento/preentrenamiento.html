@@ -1,1 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Pre-entrenamiento de IA - Estilo Cervantes</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --code-bg: #1e1e1e;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        .image-container {
+            background: #eee;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-caption {
+            padding: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: #dcdcdc;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Manual de Pre-entrenamiento de Modelos de Lenguaje (LLM)</h1>
+    <p>Proyecto: Entrenamiento con el corpus de Cervantes</p>
+</header>
+
+<div class="container">
+
+    <div class="section">
+        <h2>1. Configuración del Entorno y Hardware</h2>
+        <p>
+            El primer paso para entrenar una inteligencia artificial es la configuración del entorno de desarrollo. En este caso, se utiliza <code>Python</code> junto con la librería <code>PyTorch</code>. Es fundamental verificar que el sistema reconozca la aceleración por hardware.
+        </p>
+        <p>
+            Como se observa en el Administrador de Tareas, el uso de la <strong>GPU (NVIDIA GeForce RTX 4060 Ti)</strong> llega al 98% durante el proceso. Esto indica que el modelo está utilizando los núcleos CUDA para realizar los cálculos tensoriales, lo cual es significativamente más rápido que usar el procesador (CPU).
+        </p>
+        
+        <div class="image-container">
+            <img src="WhatsApp Image 2026-02-18 at 12.44.10.jpeg" alt="Monitorización de GPU y código fuente">
+            <div class="image-caption">Imagen 1: Monitorización del rendimiento de la GPU y estructura del código en Python.</div>
+        </div>
+        
+        <p>
+            En el código fuente de la izquierda, se definen clases como <code>Head(nn.Module)</code>, que representan las cabezas de atención del modelo, componentes clave de la arquitectura Transformer.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>2. El Proceso de Entrenamiento (Loss Optimization)</h2>
+        <p>
+            El entrenamiento consiste en alimentar al modelo con fragmentos de texto (en este caso, del archivo <code>quijote.txt</code>) y pedirle que prediga el siguiente carácter. La diferencia entre su predicción y el texto real se mide mediante una función de pérdida llamada <strong>Loss</strong>.
+        </p>
+        <p>
+            En la consola podemos ver cómo el <code>loss de entrenamiento</code> y el <code>loss de validación</code> disminuyen drásticamente desde un valor de 4.9 hasta 1.35 después de 4500 iteraciones. Cuanto menor es el loss, mejor "entiende" la IA la estructura gramatical del texto original.
+        </p>
+
+        <div class="image-container">
+            <img src="WhatsApp Image 2026-02-18 at 12.44.09 (1).jpeg" alt="Log de iteraciones y pérdida">
+            <div class="image-caption">Imagen 2: Progreso del entrenamiento y primera generación de texto tras 4500 iteraciones.</div>
+        </div>
+
+        <p>
+            Al finalizar las iteraciones, el modelo intenta generar texto. Aunque al principio puede parecer confuso ("NTú-In Narón..."), ya se observan estructuras que imitan el español antiguo y nombres propios como "Teresal".
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>3. Inferencia y Pruebas de Usuario</h2>
+        <p>
+            Una vez que el modelo está entrenado, pasamos a la fase de <strong>inferencia</strong>. Aquí es donde el usuario puede interactuar con la IA mediante un script de prueba (<code>probar.py</code>).
+        </p>
+        <p>
+            El sistema solicita un "inicio de frase" (prompt) y la IA intenta completarlo basándose en lo aprendido. En el ejemplo, al ingresar "Sancho Panza", el modelo responde con una estructura que evoca el estilo de Cervantes, mencionando a "Don Quijote".
+        </p>
+
+        <div class="image-container">
+            <img src="WhatsApp Image 2026-02-18 at 12.44.09.jpeg" alt="Interacción con el modelo">
+            <div class="image-caption">Imagen 3: Interfaz de usuario para realizar inferencias con el modelo cargado.</div>
+        </div>
+
+        <p>
+            Es importante notar que el entrenamiento de una IA es un proceso iterativo. Si el resultado no es coherente, se deben ajustar hiperparámetros como la tasa de aprendizaje (learning rate), el número de capas o aumentar el tiempo de entrenamiento.
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    <p>Manual generado para el Curso de IA - 2026</p>
+</footer>
+
+</body>
+</html>
