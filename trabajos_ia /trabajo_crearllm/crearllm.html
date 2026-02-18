@@ -87,23 +87,11 @@
 
 <div class="container">
     <header>
-        <h1>Guía de Entrenamiento: Chef-Bot LLM</h1>
-        <p>Proceso de Fine-tuning con Axolotl y modelos de la familia Phi-3</p>
+        <h1>Guía de Entrenamiento: Crear LLM</h1>
+        <p>Carlos Giganto Lobato</p>
     </header>
-
     <section class="step">
-        <h2>Paso 1: Definición de Capacidades y Dataset</h2>
-        <p>El primer paso consiste en definir el comportamiento del modelo. En este caso, estamos entrenando a un <strong>Chef-Bot</strong> especializado en recetas basadas en ingredientes específicos.</p>
-        <div class="code-box">Objetivo: Generar recetas claras a partir de inputs simples.</div>
-        
-        <div class="image-placeholder">
-            <img src="capturas/1.jpeg" alt="Ejemplo de respuesta del Chef-bot">
-        </div>
-        <p><em>Descripción:</em> El modelo debe ser capaz de interpretar ingredientes como "patatas, huevos, cebolla" y devolver una receta estructurada.</p>
-    </section>
-
-    <section class="step">
-        <h2>Paso 2: Configuración del Entorno y Hardware</h2>
+        <h2>Paso 1: Configuración del Entorno y Hardware</h2>
         <p>Para el entrenamiento (LoRA), se requiere monitorizar el uso de la GPU. En las pruebas, se utiliza una <strong>NVIDIA GeForce RTX 4060 Ti</strong> con 8GB de VRAM.</p>
         
         <div class="image-placeholder">
@@ -113,13 +101,23 @@
     </section>
 
     <section class="step">
-        <h2>Paso 3: Configuración de Parámetros (Hyperparameters)</h2>
+        <h2>Paso 2: Configuración de Parámetros (Hyperparameters)</h2>
         <p>Configuramos el archivo <code>config_chef.yml</code> definiendo el método LoRA, el número de épocas y la tasa de aprendizaje (learning rate).</p>
         
         <div class="image-placeholder">
             <img src="capturas/3.jpeg" alt="Configuración de hiperparámetros">
         </div>
         <p><em>Detalles técnicos:</em> Se utiliza <code>rank: 16</code>, <code>alpha: 32</code> y un optimizador <code>adamw_torch</code> para maximizar la eficiencia en 8GB de VRAM.</p>
+    </section>
+    <section class="step">
+        <h2>Paso 3: Definición de Capacidades y Dataset</h2>
+        <p>Una vez hechos los anteriores pasos podemos comprobar que en este caso, hemos entrenado a un modelo especializado en recetas basadas en ingredientes específicos.</p>
+        <div class="code-box">Objetivo: Generar recetas claras a partir de inputs simples.</div>
+        
+        <div class="image-placeholder">
+            <img src="capturas/1.jpeg" alt="Ejemplo de respuesta del Chef-bot">
+        </div>
+        <p><em>Descripción:</em> El modelo debe ser capaz de interpretar ingredientes como "patatas, huevos, cebolla" y devolver una receta estructurada.</p>
     </section>
 
     <section class="step">
