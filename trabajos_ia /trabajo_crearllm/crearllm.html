@@ -97,7 +97,7 @@
         <div class="code-box">Objetivo: Generar recetas claras a partir de inputs simples.</div>
         
         <div class="image-placeholder">
-            <img src="1.jpeg" alt="Ejemplo de respuesta del Chef-bot">
+            <img src="capturas/1.jpeg" alt="Ejemplo de respuesta del Chef-bot">
         </div>
         <p><em>Descripción:</em> El modelo debe ser capaz de interpretar ingredientes como "patatas, huevos, cebolla" y devolver una receta estructurada.</p>
     </section>
@@ -107,7 +107,7 @@
         <p>Para el entrenamiento (LoRA), se requiere monitorizar el uso de la GPU. En las pruebas, se utiliza una <strong>NVIDIA GeForce RTX 4060 Ti</strong> con 8GB de VRAM.</p>
         
         <div class="image-placeholder">
-            <img src="2.jpeg" alt="Monitorización de GPU y proceso Axolotl">
+            <img src="capturas/2.jpeg" alt="Monitorización de GPU y proceso Axolotl">
         </div>
         <p><em>Clave:</em> El uso de la GPU debe rondar el 90-100% durante el proceso de entrenamiento de los <em>shards</em> del modelo.</p>
     </section>
@@ -117,7 +117,7 @@
         <p>Configuramos el archivo <code>config_chef.yml</code> definiendo el método LoRA, el número de épocas y la tasa de aprendizaje (learning rate).</p>
         
         <div class="image-placeholder">
-            <img src="3.jpeg" alt="Configuración de hiperparámetros">
+            <img src="capturas/3.jpeg" alt="Configuración de hiperparámetros">
         </div>
         <p><em>Detalles técnicos:</em> Se utiliza <code>rank: 16</code>, <code>alpha: 32</code> y un optimizador <code>adamw_torch</code> para maximizar la eficiencia en 8GB de VRAM.</p>
     </section>
@@ -127,7 +127,7 @@
         <p>Una vez completado el entrenamiento, verificamos la velocidad de generación (tokens por segundo) y nos aseguramos de que el modelo alcance el token de parada (EOS).</p>
         
         <div class="image-placeholder">
-            <img src="4.jpeg" alt="Métricas de salida del modelo">
+            <img src="capturas/4.jpeg" alt="Métricas de salida del modelo">
         </div>
         <p><em>Resultado:</em> Una velocidad de <strong>19.34 tok/sec</strong> indica un rendimiento óptimo para uso en tiempo real.</p>
     </section>
