@@ -3,216 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Práctica: Creación de LLM de IA</title>
+    <title>Manual: Creación de Chef-Bot LLM</title>
     <style>
         :root {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #ffffff;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --accent-primary: #3b82f6;
-            --accent-hover: #2563eb;
-            --border-color: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0,0, 0.1), 0 2px 4px -1px rgba(0, 0,0, 0.06);
+            --primary-color: #00d1b2;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --accent-color: #38bdf8;
         }
-        * {
-            box-sizing: border-box;
-        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            color: var(--text-primary);
             margin: 0;
             padding: 0;
-            background-color: var(--bg-primary);
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 40px 20px;
         }
+
         header {
             text-align: center;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
         }
-        h1 {
-            color: var(--accent-primary);
-            margin: 0 0 0.5rem 0;
-            font-size: 2.5rem;
-        }
-        h2 {
-            color: var(--text-primary);
-            border-left: 4px solid var(--accent-primary);
-            padding-left: 1rem;
-            margin-top: 3rem;
-        }
-        h3 {
-            color: var(--accent-primary);
-            margin-top: 2rem;
-        }
-        section {
-            background: var(--bg-secondary);
-            margin-bottom: 2rem;
-            padding: 2rem;
+
+        h1 { color: var(--primary-color); font-size: 2.5rem; margin-bottom: 10px; }
+        h2 { color: var(--accent-color); border-left: 4px solid var(--accent-color); padding-left: 15px; margin-top: 40px; }
+
+        .step {
+            background-color: var(--card-bg);
             border-radius: 12px;
-            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
+
         .image-placeholder {
-            background: #f1f5f9;
-            border: 2px dashed var(--accent-primary);
+            width: 100%;
+            min-height: 300px;
+            background-color: #000;
+            border: 2px dashed #475569;
             border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            margin: 1rem 0;
-            min-height: 200px;
+            margin: 20px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
+            overflow: hidden;
         }
+
         .image-placeholder img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
+            display: block;
         }
-        .image-placeholder::before {
-            content: "Aquí inserta la captura (file:ID)";
-            color: var(--text-secondary);
-            font-style: italic;
-            margin-bottom: 1rem;
+
+        .code-box {
+            background: #000;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #d1d5db;
+            margin: 10px 0;
         }
-        ul, ol {
-            padding-left: 1.5rem;
-        }
-        li {
-            margin-bottom: 0.5rem;
-        }
-        code {
-            background: #f1f5f9;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Monaco', monospace;
-            color: #ec4899;
-        }
-        pre {
-            background: #1e1b4b;
-            color: #a5b4fc;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
+
         footer {
             text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
-            margin-top: 3rem;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem 0.5rem;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+            margin-top: 50px;
+            font-size: 0.8rem;
+            color: #94a3b8;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Manual de Práctica: Creación de un LLM de IA</h1>
-            <p>Guía paso a paso basada en las capturas de la práctica de desarrollo de un modelo de lenguaje grande (LLM) usando herramientas como PyTorch y entornos GPU.</p>
-        </header>
 
-        <section id="introduccion">
-            <h2>Introducción</h2>
-            <p>Esta práctica cubre la creación y entrenamiento de un LLM de IA, utilizando librerías como PyTorch en un entorno con GPU NVIDIA. Se incluyen logs de terminal, configuraciones de modelo y monitoreo de recursos. Las capturas muestran el proceso real en Windows con herramientas como Visual Studio Code y monitoreadores GPU.[cite:6][file:1][file:2][file:3][file:4]</p>
-        </section>
+<div class="container">
+    <header>
+        <h1>Guía de Entrenamiento: Chef-Bot LLM</h1>
+        <p>Proceso de Fine-tuning con Axolotl y modelos de la familia Phi-3</p>
+    </header>
 
-        <section id="requisitos">
-            <h2>Requisitos Previos</h2>
-            <ul>
-                <li>Python 3.10+ con PyTorch instalado (soporte CUDA para GPU).</li>
-                <li>Entorno GPU: NVIDIA con drivers CUDA actualizados.[file:4]</li>
-                <li>Editor: VS Code con extensiones para Python y Jupyter.</li>
-                <li>Librerías: torch, transformers, datasets (instalar via pip).</li>
-            </ul>
-            <div class="image-placeholder" data-for="captura-requisitos">
-                Aquí inserta la captura de configuración inicial (ej. file:3)
-            </div>
-        </section>
+    <section class="step">
+        <h2>Paso 1: Definición de Capacidades y Dataset</h2>
+        <p>El primer paso consiste en definir el comportamiento del modelo. En este caso, estamos entrenando a un <strong>Chef-Bot</strong> especializado en recetas basadas en ingredientes específicos.</p>
+        <div class="code-box">Objetivo: Generar recetas claras a partir de inputs simples.</div>
+        
+        <div class="image-placeholder">
+            <img src="1.jpeg" alt="Ejemplo de respuesta del Chef-bot">
+        </div>
+        <p><em>Descripción:</em> El modelo debe ser capaz de interpretar ingredientes como "patatas, huevos, cebolla" y devolver una receta estructurada.</p>
+    </section>
 
-        <section id="configuracion-entorno">
-            <h2>Configuración del Entorno</h2>
-            <p>Abre VS Code y configura el workspace con scripts de entrenamiento. Verifica GPU con <code>nvidia-smi</code> y carga el modelo base (ej. TinyLlama).[cite:6][file:4]</p>
-            <div class="image-placeholder" data-for="captura-vs-code">
-                Aquí inserta la captura del editor VS Code con logs (ej. file:1)
-            </div>
-            <pre><code>import torch
-print(torch.cuda.is_available())  # Debe ser True
-</code></pre>
-        </section>
+    <section class="step">
+        <h2>Paso 2: Configuración del Entorno y Hardware</h2>
+        <p>Para el entrenamiento (LoRA), se requiere monitorizar el uso de la GPU. En las pruebas, se utiliza una <strong>NVIDIA GeForce RTX 4060 Ti</strong> con 8GB de VRAM.</p>
+        
+        <div class="image-placeholder">
+            <img src="2.jpeg" alt="Monitorización de GPU y proceso Axolotl">
+        </div>
+        <p><em>Clave:</em> El uso de la GPU debe rondar el 90-100% durante el proceso de entrenamiento de los <em>shards</em> del modelo.</p>
+    </section>
 
-        <section id="carga-modelo">
-            <h2>Carga del Modelo y Datos</h2>
-            <h3>Paso 1: Cargar modelo profesor</h3>
-            <p>Usa Hugging Face Transformers para cargar un LLM preentrenado. Configura tokenizer y dataset.[file:2]</p>
-            <div class="image-placeholder" data-for="captura-modelo">
-                Aquí inserta la captura de carga de modelo y logs de entrenamiento (ej. file:2)
-            </div>
-            <h3>Paso 2: Preparar dataset</h3>
-            <ul>
-                <li>Descarga dataset de texto (ej. Alpaca).</li>
-                <li>Tokeniza y batch.</li>
-            </ul>
-        </section>
+    <section class="step">
+        <h2>Paso 3: Configuración de Parámetros (Hyperparameters)</h2>
+        <p>Configuramos el archivo <code>config_chef.yml</code> definiendo el método LoRA, el número de épocas y la tasa de aprendizaje (learning rate).</p>
+        
+        <div class="image-placeholder">
+            <img src="3.jpeg" alt="Configuración de hiperparámetros">
+        </div>
+        <p><em>Detalles técnicos:</em> Se utiliza <code>rank: 16</code>, <code>alpha: 32</code> y un optimizador <code>adamw_torch</code> para maximizar la eficiencia en 8GB de VRAM.</p>
+    </section>
 
-        <section id="entrenamiento">
-            <h2>Proceso de Entrenamiento</h2>
-            <p>Inicia el entrenamiento con SFTTrainer o similar. Monitorea uso de GPU (VRAM ~8GB+). Logs muestran epochs, loss y batches procesados.[cite:6][file:1]</p>
-            <div class="image-placeholder" data-for="captura-entrenamiento">
-                Aquí inserta la captura de logs de entrenamiento en terminal (ej. file:1)
-            </div>
-            <p>Errores comunes: Out-of-memory (reduce batch size), CUDA no detectado (verifica drivers).</p>
-        </section>
-
-        <section id="monitoreo">
-            <h2>Monitoreo de Recursos</h2>
-            <p>Usa herramientas como GPU-Z o nvidia-smi para vigilar temperatura, uso de memoria y rendimiento durante el entrenamiento.[file:4]</p>
-            <div class="image-placeholder" data-for="captura-gpu">
-                Aquí inserta la captura del monitoreo GPU (ej. file:4)
-            </div>
-        </section>
-
-        <section id="errores-soluciones">
-            <h2>Errores Comunes y Soluciones</h2>
-            <table style="width:100%; border-collapse: collapse;">
-                <tr style="background: var(--accent-primary); color: white;">
-                    <th style="padding: 1rem; border: 1px solid var(--border-color);">Error</th>
-                    <th style="padding: 1rem; border: 1px solid var(--border-color);">Solución</th>
-                </tr>
-                <tr>
-                    <td style="padding: 1rem; border: 1px solid var(--border-color);">CUDA out of memory</td>
-                    <td style="padding: 1rem; border: 1px solid var(--border-color);">Reducir batch_size a 1, usar gradient_accumulation_steps=4</td>
-                </tr>
-                <tr>
-                    <td style="padding: 1rem; border: 1px solid var(--border-color);">No GPU detectada</td>
-                    <td style="padding: 1rem; border: 1px solid var(--border-color);">torch.cuda.is_available() False → Actualizar drivers NVIDIA</td>
-                </tr>
-            </table>
-        </section>
-
-        <section id="conclusion">
-            <h2>Conclusión de la Práctica</h2>
-            <p>El LLM se entrena exitosamente en GPU local. Guarda el modelo con model.save_pretrained(). Prueba inferencia para validar.[cite:6]</p>
-        </section>
-    </div>
+    <section class="step">
+        <h2>Paso 4: Verificación de Rendimiento e Inferencia</h2>
+        <p>Una vez completado el entrenamiento, verificamos la velocidad de generación (tokens por segundo) y nos aseguramos de que el modelo alcance el token de parada (EOS).</p>
+        
+        <div class="image-placeholder">
+            <img src="4.jpeg" alt="Métricas de salida del modelo">
+        </div>
+        <p><em>Resultado:</em> Una velocidad de <strong>19.34 tok/sec</strong> indica un rendimiento óptimo para uso en tiempo real.</p>
+    </section>
 
     <footer>
-        Manual generado para la práctica de creación de LLM - Febrero 2026. Basado en capturas reales.[cite:7]
+        <p>Manual generado para el proyecto Chef-bot Lora - 2026</p>
     </footer>
+</div>
+
 </body>
 </html>
